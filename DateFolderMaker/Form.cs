@@ -18,17 +18,21 @@ namespace DateFolderMaker
 {
 	public partial class DateFolderMaker : Form
 	{
-		enum COL { FILE, DATE };	// grid header
-		enum IMAGE_META_DATA { CREATE_DATE_TIME = 306 };	// image meta data code
-
-		private string[] Files;          // loaded files
-		private List<string> FilesList = new List<string>();  // After load file, move into setFileList
+		// grid header
+		enum COL { FILE, DATE };
+		
+		// image meta data code
+		enum IMAGE_META_DATA { CREATE_DATE_TIME = 306 };
+		
+		// loaded files
+		private string[] Files;
+		// after load file, move into setFileList
+		private List<string> FilesList = new List<string>();  
 
 		Image TheImage = null;
 		
 		delegate void ShowDelegate();
-
-
+		
 		public DateFolderMaker()
 		{
 			InitializeComponent();
