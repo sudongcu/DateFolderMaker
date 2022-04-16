@@ -1,5 +1,5 @@
 # DateFolderMaker
-Solution to create folder by date of files.
+Window Application to create folder by date of files.
 - .NET Framework 4.7.2
 - WinForm Application
 
