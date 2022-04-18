@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace DFMLibrary.Models
+namespace DFMObject.Models
 {
 	public class DataGridViewModel
 	{

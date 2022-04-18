@@ -1,6 +1,7 @@
-﻿using DFMLibrary.Models;
-using DFMLibrary.Module;
+﻿using DFMLibrary.Module;
 using DFMLibrary.Utils;
+using DFMObject.Enums;
+using DFMObject.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,12 +19,6 @@ namespace DateFolderMaker
 {
 	public partial class DateFolderMaker : Form
 	{
-		// grid header
-		enum COL { FILE, DATE };
-		
-		// image meta data code
-		enum IMAGE_META_DATA { CREATE_DATE_TIME = 306 };
-		
 		// loaded files
 		private string[] Files;
 		// after load file, move into setFileList

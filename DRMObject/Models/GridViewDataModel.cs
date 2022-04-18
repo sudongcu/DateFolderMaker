@@ -1,4 +1,4 @@
-﻿namespace DFMLibrary.Models
+﻿namespace DFMObject.Models
 {
 	public class GridViewDataModel
 	{
