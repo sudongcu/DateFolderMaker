@@ -210,7 +210,7 @@ namespace DateFolderMaker
 		{
 			OpenFileDialog of = new OpenFileDialog
 			{
-				Title = "불러오기",
+				Title = "Load Files",
 				RestoreDirectory = true,
 				Multiselect = true
 			};
