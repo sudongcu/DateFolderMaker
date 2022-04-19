@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DFMLibrary", "DFMLibrary\DF
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "DFMSetup", "DFMSetup\DFMSetup.vdproj", "{A801AE9E-5533-487B-B28C-4F92E81665FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DFMObject", "DRMObject\DFMObject.csproj", "{BD57DBAF-5A6F-4F1B-A55C-FE7C79931597}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DFMObject", "DFMObject\DFMObject.csproj", "{BD57DBAF-5A6F-4F1B-A55C-FE7C79931597}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -142,7 +142,7 @@
       <Project>{2922fe31-f778-4e5c-bf2a-f0d3ded90130}</Project>
       <Name>DFMLibrary</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DRMObject\DFMObject.csproj">
+    <ProjectReference Include="..\DFMObject\DFMObject.csproj">
       <Project>{bd57dbaf-5a6f-4f1b-a55c-fe7c79931597}</Project>
       <Name>DFMObject</Name>
     </ProjectReference>
