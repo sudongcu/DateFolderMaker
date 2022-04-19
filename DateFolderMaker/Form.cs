@@ -24,10 +24,12 @@ namespace DateFolderMaker
 		// after load file, move into setFileList
 		private List<string> FilesList = new List<string>();  
 
-		Image TheImage = null;
+		private Image TheImage = null;
 		
 		delegate void ShowDelegate();
-		
+
+		private DataGridViewHandler dataGridViewHandler;
+
 		public DateFolderMaker()
 		{
 			InitializeComponent();
@@ -46,21 +48,17 @@ namespace DateFolderMaker
 		/// </summary>
 		private void InitGrid()
 		{
-			DataGridViewHandler dataGridViewHandler = new DataGridViewHandler(dataGridView);
+			dataGridViewHandler = new DataGridViewHandler(dataGridView);
 			dataGridViewHandler.SetHeaderInfo("File", "File", (int)COL.FILE, 400, DataGridViewContentAlignment.MiddleLeft);
 			dataGridViewHandler.SetHeaderInfo("Date", "Date", (int)COL.DATE, 200, DataGridViewContentAlignment.MiddleLeft);
-
-			dataGridView.Rows.Clear();
-			dataGridView.Refresh();
-			dataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-			dataGridView.RowHeadersVisible = false;
+			dataGridViewHandler.ClearAndRefreshGrid();
 		}
 
 		/// <summary>
 		/// initialize progressbar
 		/// </summary>
 		/// <param name="totFiles"></param>
-		private void initProgressBar(int totFiles)
+		private void InitProgressBar(int totFiles)
 		{
 			progressBar.Style = ProgressBarStyle.Continuous;
 			progressBar.Minimum = 0;
@@ -74,23 +72,22 @@ namespace DateFolderMaker
 		/// </summary>
 		private void SetLoadFiles()
 		{
-			// Clear GridView
-			dataGridView.Rows.Clear();
-			dataGridView.Refresh();
-			
-			initProgressBar(FilesList.Count);
+			// clear GridView
+			dataGridViewHandler.ClearAndRefreshGrid();
+
+			InitProgressBar(FilesList.Count);
 
 			// hide grid header, until progress is over for speed
-			dataGridView.ColumnHeadersVisible = false;
+			dataGridViewHandler.HeaderHide();
 
 			foreach (string file in FilesList)
 			{
-				dataGridView.Rows.Add(file.Substring(text_path.Text.Length + 1), GetFileDate(file));
+				dataGridViewHandler.RowAdd(file.Substring(text_path.Text.Length + 1), GetFileDate(file));
 				progressBar.PerformStep();
 			}
 
 			// show grid header
-			dataGridView.ColumnHeadersVisible = true;
+			dataGridViewHandler.HeaderShow();
 		}
 
 		/// <summary>
@@ -121,21 +118,19 @@ namespace DateFolderMaker
 					return fileInfo.LastWriteTime.ToString();
 				}
 			}
-			catch (Exception)
+			catch
 			{
 				FileInfo fileInfo = new FileInfo(imgFile);
 				return fileInfo.LastWriteTime.ToString();
 			}
 		}
 
-
 		/// <summary>
 		/// clear all controls
 		/// </summary>
 		private void Clear()
 		{
-			dataGridView.Rows.Clear();
-			dataGridView.Refresh();
+			dataGridViewHandler.ClearAndRefreshGrid();
 
 			text_path.Text = "";
 			text_new.Text = "";
@@ -143,7 +138,7 @@ namespace DateFolderMaker
 			Files = null;
 			FilesList.Clear();
 
-			initProgressBar(0);
+			InitProgressBar(0);
 		}
 
 		/// <summary>
@@ -268,10 +263,10 @@ namespace DateFolderMaker
 
 			#region Bind List Model
 
-			if (dataGridView.Rows.Count > 0)
+			if (dataGridViewHandler.Count > 0)
 			{
 				// create temp grid view data
-				DataGridView tempDataGridView = dataGridView;
+				DataGridView tempDataGridView = dataGridViewHandler.GetDataGridView();
 				// sort by date asc
 				tempDataGridView.Sort(tempDataGridView.Columns["Date"], ListSortDirection.Ascending);
 
@@ -337,7 +332,7 @@ namespace DateFolderMaker
 			if (list.Count > 0)
 			{
 				// progress bar init
-				initProgressBar(list.Sum(s => s.fileList.Count()));
+				InitProgressBar(list.Sum(s => s.fileList.Count()));
 
 				try
 				{
