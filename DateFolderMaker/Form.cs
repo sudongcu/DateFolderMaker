@@ -78,16 +78,16 @@ namespace DateFolderMaker
 			InitProgressBar(FilesList.Count);
 
 			// hide grid header, until progress is over for speed
-			dataGridViewHandler.HeaderHide();
+			dataGridViewHandler.HideHeader();
 
 			foreach (string file in FilesList)
 			{
-				dataGridViewHandler.RowAdd(file.Substring(text_path.Text.Length + 1), GetFileDate(file));
+				dataGridViewHandler.AddRow(file.Substring(text_path.Text.Length + 1), GetFileDate(file));
 				progressBar.PerformStep();
 			}
 
 			// show grid header
-			dataGridViewHandler.HeaderShow();
+			dataGridViewHandler.ShowHeader();
 		}
 
 		/// <summary>

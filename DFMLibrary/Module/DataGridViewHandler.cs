@@ -6,9 +6,9 @@ namespace DFMLibrary.Module
 	{
 		private DataGridView dgv = null;
 
-		private int count = 0;
+		private int _Count = 0;
 
-		public int Count { get { return count; } }
+		public int Count { get { return _Count; } }
 
 		public DataGridViewHandler(DataGridView dgv)
 		{
@@ -49,7 +49,7 @@ namespace DFMLibrary.Module
 		/// <summary>
 		/// Show DateGridView Header
 		/// </summary>
-		public void HeaderShow()
+		public void ShowHeader()
 		{
 			dgv.ColumnHeadersVisible = true;
 		}
@@ -57,7 +57,7 @@ namespace DFMLibrary.Module
 		/// <summary>
 		/// Hide DateGridView Header
 		/// </summary>
-		public void HeaderHide()
+		public void HideHeader()
 		{
 			dgv.ColumnHeadersVisible = false;
 		}
@@ -66,20 +66,20 @@ namespace DFMLibrary.Module
 		/// Add Row Values
 		/// </summary>
 		/// <param name="values"></param>
-		public void RowAdd(params object[] values)
+		public void AddRow(params object[] values)
 		{
 			dgv.Rows.Add(values);
-			count++;
+			_Count++;
 		}
 
 		/// <summary>
 		/// Remove Row
 		/// </summary>
 		/// <param name="values"></param>
-		public void RowRemove(int row)
+		public void RemoveRow(int row)
 		{
 			dgv.Rows.RemoveAt(row);
-			count--;
+			_Count--;
 		}
 
 		/// <summary>
@@ -89,7 +89,7 @@ namespace DFMLibrary.Module
 		{
 			dgv.Rows.Clear();
 			dgv.Refresh();
-			count = 0;
+			_Count = 0;
 		}
 	}
 }
