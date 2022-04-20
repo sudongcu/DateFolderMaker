@@ -49,8 +49,8 @@ namespace DateFolderMaker
 		private void InitGrid()
 		{
 			dataGridViewHandler = new DataGridViewHandler(dataGridView);
-			dataGridViewHandler.SetHeaderInfo("File", "File", (int)COL.FILE, 400, DataGridViewContentAlignment.MiddleLeft);
-			dataGridViewHandler.SetHeaderInfo("Date", "Date", (int)COL.DATE, 200, DataGridViewContentAlignment.MiddleLeft);
+			dataGridViewHandler.AddHeader("File", "File", (int)COL.FILE, 400, DataGridViewContentAlignment.MiddleLeft);
+			dataGridViewHandler.AddHeader("Date", "Date", (int)COL.DATE, 200, DataGridViewContentAlignment.MiddleLeft);
 			dataGridViewHandler.ClearAndRefreshGrid();
 		}
 
@@ -263,7 +263,7 @@ namespace DateFolderMaker
 
 			#region Bind List Model
 
-			if (dataGridViewHandler.Count > 0)
+			if (dataGridViewHandler.RowCount > 0)
 			{
 				// create temp grid view data
 				DataGridView tempDataGridView = dataGridViewHandler.GetDataGridView();

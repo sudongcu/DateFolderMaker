@@ -6,9 +6,11 @@ namespace DFMLibrary.Module
 	{
 		private DataGridView dgv = null;
 
-		private int _Count = 0;
+		private int _ColumnCount = 0;
+		private int _RowCount = 0;
 
-		public int Count { get { return _Count; } }
+		public int ColumnCount { get { return _ColumnCount; } }
+		public int RowCount { get { return _RowCount; } }
 
 		public DataGridViewHandler(DataGridView dgv)
 		{
@@ -27,23 +29,36 @@ namespace DFMLibrary.Module
 		}
 
 		/// <summary>
-		/// DataGridView Column Setting
+		/// DataGridView Column Add
 		/// </summary>
 		/// <param name="headertext">Column Header Text</param>
 		/// <param name="name">Column Name</param>
 		/// <param name="colNum">Column Index</param>
 		/// <param name="width">Column Width</param>
 		/// <param name="align">Text Alignment</param>
-		public void SetHeaderInfo(string headertext, string name, int colNum, int width, DataGridViewContentAlignment align)
+		public int AddHeader(string headertext, string name, int colNum, int width, DataGridViewContentAlignment align)
 		{
-			DataGridViewTextBoxColumn col = new DataGridViewTextBoxColumn
+			int count = 0;
+
+			try
 			{
-				HeaderText = headertext,
-				Name = name
-			};
-			dgv.Columns.Add(col);
-			dgv.Columns[colNum].Width = width;
-			dgv.Columns[colNum].DefaultCellStyle.Alignment = align;
+				DataGridViewTextBoxColumn col = new DataGridViewTextBoxColumn
+				{
+					HeaderText = headertext,
+					Name = name
+				};
+				dgv.Columns.Add(col);
+				dgv.Columns[colNum].Width = width;
+				dgv.Columns[colNum].DefaultCellStyle.Alignment = align;
+
+				count++;
+			}
+			finally
+			{
+				_ColumnCount += count;
+			}
+
+			return count;
 		}
 
 		/// <summary>
@@ -66,20 +81,42 @@ namespace DFMLibrary.Module
 		/// Add Row Values
 		/// </summary>
 		/// <param name="values"></param>
-		public void AddRow(params object[] values)
+		public int AddRow(params object[] values)
 		{
-			dgv.Rows.Add(values);
-			_Count++;
+			int count = 0;
+
+			try
+			{
+				dgv.Rows.Add(values);
+				count++;
+			}
+			finally
+			{
+				_RowCount += count;
+			}
+
+			return count;
 		}
 
 		/// <summary>
 		/// Remove Row
 		/// </summary>
 		/// <param name="values"></param>
-		public void RemoveRow(int row)
+		public int RemoveRow(int row)
 		{
-			dgv.Rows.RemoveAt(row);
-			_Count--;
+			int count = 0;
+
+			try
+			{
+				dgv.Rows.RemoveAt(row);
+				count++;
+			}
+			finally
+			{
+				_RowCount -= count;
+			}
+
+			return count;
 		}
 
 		/// <summary>
@@ -89,7 +126,7 @@ namespace DFMLibrary.Module
 		{
 			dgv.Rows.Clear();
 			dgv.Refresh();
-			_Count = 0;
+			_RowCount = 0;
 		}
 	}
 }
