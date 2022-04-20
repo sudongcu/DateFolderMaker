@@ -92,6 +92,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
         "Release"
@@ -192,11 +200,6 @@
             "AssemblyAsmDisplayName" = "8:DRMObject, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_1928C0ACA324325185126CD4221B0115"
-                    {
-                    "Name" = "8:DRMObject.dll"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:DRMObject.dll"
             "TargetName" = "8:"
@@ -323,15 +326,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:DateFolderMaker"
-        "ProductCode" = "8:{07D40CF8-0F05-4C67-807D-4CC1E83B907D}"
-        "PackageCode" = "8:{ACBB8EF4-00F8-4E3E-A9F4-81E74B9E1964}"
+        "ProductCode" = "8:{5241623E-FDC1-4FB3-A5B7-608F546B196D}"
+        "PackageCode" = "8:{3DA5DAE0-8835-4670-8FDF-79E57860642A}"
         "UpgradeCode" = "8:{54A2E35F-C607-46F8-8909-442A42EEE5F1}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.0.5"
+        "ProductVersion" = "8:1.0.6"
         "Manufacturer" = "8:sudongcu"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
