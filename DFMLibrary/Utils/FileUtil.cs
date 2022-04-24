@@ -17,6 +17,7 @@ namespace DFMLibrary.Utils
 		/// <returns></returns>
 		public static string GetFileDate(string imgFile)
 		{
+			string format = "yyyy-MM-dd HH:mm:ss";
 			try
 			{
 				// 이미지 유효성 검사
@@ -35,13 +36,13 @@ namespace DFMLibrary.Utils
 				else
 				{
 					FileInfo fileInfo = new FileInfo(imgFile);
-					return fileInfo.LastWriteTime.ToString();
+					return fileInfo.LastWriteTime.ToString(format);
 				}
 			}
 			catch
 			{
 				FileInfo fileInfo = new FileInfo(imgFile);
-				return fileInfo.LastWriteTime.ToString();
+				return fileInfo.LastWriteTime.ToString(format);
 			}
 		}
 

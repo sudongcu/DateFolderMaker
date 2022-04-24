@@ -81,7 +81,7 @@ namespace DFMLibrary.Module
 		/// Add Row Values
 		/// </summary>
 		/// <param name="values"></param>
-		public int AddRow(params object[] values)
+		public void AddRow(params object[] values)
 		{
 			int count = 0;
 
@@ -94,15 +94,28 @@ namespace DFMLibrary.Module
 			{
 				_RowCount += count;
 			}
+		}
 
-			return count;
+		public void AddRowRange(DataGridViewRow[] rows)
+		{
+			int count = 0;
+			try
+			{
+				dgv.Rows.AddRange(rows);
+				count = rows.Length;
+			}
+			finally
+			{
+				_RowCount += count;
+			}
+
 		}
 
 		/// <summary>
 		/// Remove Row
 		/// </summary>
 		/// <param name="values"></param>
-		public int RemoveRow(int row)
+		public void RemoveRow(int row)
 		{
 			int count = 0;
 
@@ -115,8 +128,6 @@ namespace DFMLibrary.Module
 			{
 				_RowCount -= count;
 			}
-
-			return count;
 		}
 
 		/// <summary>

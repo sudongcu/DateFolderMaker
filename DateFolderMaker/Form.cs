@@ -5,13 +5,8 @@ using DFMObject.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -22,9 +17,7 @@ namespace DateFolderMaker
 		// loaded files
 		private string[] Files;
 		// after load file, move into setFileList
-		private List<string> FilesList = new List<string>();  
-
-		private Image TheImage = null;
+		private List<string> FilesList = new List<string>();
 		
 		delegate void ShowDelegate();
 
@@ -75,54 +68,30 @@ namespace DateFolderMaker
 			// clear GridView
 			dataGridViewHandler.ClearAndRefreshGrid();
 
-			InitProgressBar(FilesList.Count);
+			InitProgressBar(FilesList.Count + 1);
 
 			// hide grid header, until progress is over for speed
 			dataGridViewHandler.HideHeader();
 
+			List<DataGridViewRow> rows = new List<DataGridViewRow>();
+
 			foreach (string file in FilesList)
 			{
-				dataGridViewHandler.AddRow(file.Substring(text_path.Text.Length + 1), GetFileDate(file));
+				DataGridViewRow row = new DataGridViewRow();
+				row.CreateCells(dataGridViewHandler.GetDataGridView());
+				row.Cells[(int)COL.FILE].Value = file.Substring(text_path.Text.Length + 1);
+				row.Cells[(int)COL.DATE].Value = FileUtil.GetFileDate(file);
+
+				rows.Add(row);
+
 				progressBar.PerformStep();
 			}
 
+			dataGridViewHandler.AddRowRange(rows.ToArray());
+			progressBar.PerformStep();
+
 			// show grid header
 			dataGridViewHandler.ShowHeader();
-		}
-
-		/// <summary>
-		/// get file's property date value
-		/// </summary>
-		/// <param name="imgFile"></param>
-		/// <returns></returns>
-		private string GetFileDate(string imgFile)
-		{
-			try
-			{
-				// 이미지 유효성 검사
-				if (ValidationUtil.IsValidImage(imgFile))
-				{
-					TheImage = new Bitmap(imgFile);					
-					PropertyItem[] propItems = TheImage.PropertyItems;
-					TheImage.Dispose();
-					
-					ASCIIEncoding encoding = new ASCIIEncoding();
-
-					string[] values = encoding.GetString(propItems.Where(s => s.Id == (int)IMAGE_META_DATA.CREATE_DATE_TIME).Select(s => s.Value).FirstOrDefault()).Replace("?", "").Split(' ');
-
-					return values[0].Replace(":", "-") + " " + values[1];
-				}
-				else
-				{
-					FileInfo fileInfo = new FileInfo(imgFile);
-					return fileInfo.LastWriteTime.ToString();
-				}
-			}
-			catch
-			{
-				FileInfo fileInfo = new FileInfo(imgFile);
-				return fileInfo.LastWriteTime.ToString();
-			}
 		}
 
 		/// <summary>
@@ -176,22 +145,6 @@ namespace DateFolderMaker
 					}
 				}
 			});
-		}
-
-
-		/// <summary>
-		/// open directory popup
-		/// </summary>
-		/// <param name="path"></param>
-		private void OpenDirectory(string path)
-		{
-			if (string.IsNullOrEmpty(path) == false)
-			{
-				DirectoryInfo directoryInfo = new DirectoryInfo(path);
-
-				if (directoryInfo.Exists)
-					Process.Start(path);
-			}
 		}
 
 		#region Event
@@ -285,15 +238,15 @@ namespace DateFolderMaker
 					// if folder is empty, create folder and add list
 					if (string.IsNullOrEmpty(model.folder))
 					{
-						model.folder = DateTime.Parse(tempDataGridView.Rows[i].Cells[1].Value.ToString()).ToShortDateString();
-						fileList.Add(tempDataGridView.Rows[i].Cells[0].Value.ToString());
+						model.folder = DataUtil.ShortDateTimeFormat(tempDataGridView.Rows[i].Cells[(int)COL.DATE].Value.ToString());
+						fileList.Add(tempDataGridView.Rows[i].Cells[(int)COL.FILE].Value.ToString());
 					}
 					else
 					{
 						// when date is same, add item
-						if (model.folder == DateTime.Parse(tempDataGridView.Rows[i].Cells[1].Value.ToString()).ToShortDateString())
+						if (model.folder == DataUtil.ShortDateTimeFormat(tempDataGridView.Rows[i].Cells[(int)COL.DATE].Value.ToString()))
 						{
-							fileList.Add(tempDataGridView.Rows[i].Cells[0].Value.ToString());
+							fileList.Add(tempDataGridView.Rows[i].Cells[(int)COL.FILE].Value.ToString());
 						}
 						else
 						{
@@ -306,8 +259,8 @@ namespace DateFolderMaker
 							model = new DataGridViewModel();
 							fileList = new List<string>();
 
-							model.folder = DateTime.Parse(tempDataGridView.Rows[i].Cells[1].Value.ToString()).ToShortDateString();
-							fileList.Add(tempDataGridView.Rows[i].Cells[0].Value.ToString());
+							model.folder = DataUtil.ShortDateTimeFormat(tempDataGridView.Rows[i].Cells[(int)COL.DATE].Value.ToString());
+							fileList.Add(tempDataGridView.Rows[i].Cells[(int)COL.FILE].Value.ToString());
 						}
 					}
 
@@ -380,7 +333,7 @@ namespace DateFolderMaker
 		/// <param name="e"></param>
 		private void path_label_DoubleClick(object sender, EventArgs e)
 		{
-			OpenDirectory(text_path.Text);
+			FileUtil.OpenDirectory(text_path.Text);
 		}
 
 		/// <summary>
@@ -390,7 +343,7 @@ namespace DateFolderMaker
 		/// <param name="e"></param>
 		private void newpath_label_DoubleClick(object sender, EventArgs e)
 		{
-			OpenDirectory(text_new.Text);
+			FileUtil.OpenDirectory(text_new.Text);
 		}
 
 		#endregion / Event

@@ -79,11 +79,11 @@
   <ItemGroup>
     <Reference Include="DFMLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\DFMLibrary\bin\Release\DFMLibrary.dll</HintPath>
+      <HintPath>..\DFMLibrary\bin\Debug\DFMLibrary.dll</HintPath>
     </Reference>
     <Reference Include="DRMObject, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\DFMObject\bin\Release\DRMObject.dll</HintPath>
+      <HintPath>..\DFMObject\bin\Debug\DRMObject.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
