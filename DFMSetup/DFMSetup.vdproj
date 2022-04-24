@@ -197,7 +197,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DFMLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:DFMLibrary, Version=1.1.5.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_8F4D61043D9A53552BB3E73271F05586"
@@ -248,7 +248,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DRMObject, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:DRMObject, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_F546ADCAE1C97D1D1966042FEA5CB96B"
@@ -331,15 +331,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:DateFolderMaker"
-        "ProductCode" = "8:{E2D13DEF-8B9F-4C5E-9B9F-0E0003F73536}"
-        "PackageCode" = "8:{4C1F23AC-E074-4616-815D-72BD8BBB2916}"
+        "ProductCode" = "8:{5095D1DF-E999-47D9-9C9A-CEF5065A8345}"
+        "PackageCode" = "8:{E934E6A5-1728-4815-8E7E-EC00D86515E1}"
         "UpgradeCode" = "8:{54A2E35F-C607-46F8-8909-442A42EEE5F1}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.1.0"
+        "ProductVersion" = "8:1.1.6"
         "Manufacturer" = "8:sudongcu"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -349,7 +349,7 @@
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:Solution to create folder by date of files."
         "ARPURLINFOABOUT" = "8:"
-        "ARPPRODUCTICON" = "8:"
+        "ARPPRODUCTICON" = "8:_DC78AD30D75D4FC8BFD09DA26DE919E0"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
