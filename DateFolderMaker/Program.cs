@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace DateFolderMaker
@@ -9,14 +7,29 @@ namespace DateFolderMaker
 	static class Program
 	{
 		/// <summary>
-		/// 해당 응용 프로그램의 주 진입점입니다.
+		/// main
 		/// </summary>
 		[STAThread]
 		static void Main()
 		{
+			AppDomain currentDomain = AppDomain.CurrentDomain;
+			currentDomain.UnhandledException += new UnhandledExceptionEventHandler(CustomExceptionHandler);
+
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 			Application.Run(new DateFolderMaker());
+		}
+
+		/// <summary>
+		/// custom exception handler
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="args"></param>
+		static void CustomExceptionHandler(object sender, UnhandledExceptionEventArgs args)
+		{
+			Exception ex = (Exception)args.ExceptionObject;
+			Trace.WriteLine($"CustomExceptionHandler[{ex.Source}] : {ex.Message}");
+			MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 		}
 	}
 }

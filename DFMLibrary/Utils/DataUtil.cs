@@ -25,12 +25,12 @@ namespace DFMLibrary.Utils
 		public static string ShortDateTimeFormat(string arg)
 		{
 			try
-			{	
+			{
 				return DateTime.Parse(arg).ToShortDateString();
 			}
-			catch
+			catch(Exception ex)
 			{
-				throw new Exception($"ShortDateTimeFormat Error: {arg}");
+				throw new Exception(ex.Message);
 			}
 		}
 	}

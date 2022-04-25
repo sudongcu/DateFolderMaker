@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 
 namespace DFMLibrary.Module
 {
@@ -53,6 +54,10 @@ namespace DFMLibrary.Module
 
 				count++;
 			}
+			catch(Exception ex)
+			{
+				throw new Exception(ex.Message);
+			}
 			finally
 			{
 				_ColumnCount += count;
@@ -90,6 +95,10 @@ namespace DFMLibrary.Module
 				dgv.Rows.Add(values);
 				count++;
 			}
+			catch (Exception ex)
+			{
+				throw new Exception(ex.Message);
+			}
 			finally
 			{
 				_RowCount += count;
@@ -103,6 +112,10 @@ namespace DFMLibrary.Module
 			{
 				dgv.Rows.AddRange(rows);
 				count = rows.Length;
+			}
+			catch (Exception ex)
+			{
+				throw new Exception(ex.Message);
 			}
 			finally
 			{
@@ -123,6 +136,10 @@ namespace DFMLibrary.Module
 			{
 				dgv.Rows.RemoveAt(row);
 				count++;
+			}
+			catch (Exception ex)
+			{
+				throw new Exception(ex.Message);
 			}
 			finally
 			{

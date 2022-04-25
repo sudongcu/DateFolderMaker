@@ -33,7 +33,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_CB9B6643D99B72DD1B329629180E87EA"
+        "MsmKey" = "8:_BB2E629C100595CFE391C6CD0C2760A4"
         "OwnerKey" = "8:_73E370B31AD94BF39A6318B7EC4C38A4"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -52,7 +52,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_CB9B6643D99B72DD1B329629180E87EA"
+        "OwnerKey" = "8:_BB2E629C100595CFE391C6CD0C2760A4"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -166,7 +166,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DFMLibrary, Version=1.1.6.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:DFMLibrary, Version=1.1.7.1, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_0292B55641B27735898507E91EBA3614"
@@ -224,14 +224,14 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_CB9B6643D99B72DD1B329629180E87EA"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_BB2E629C100595CFE391C6CD0C2760A4"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:DRMObject, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_CB9B6643D99B72DD1B329629180E87EA"
+                    "_BB2E629C100595CFE391C6CD0C2760A4"
                     {
                     "Name" = "8:DRMObject.dll"
                     "Attributes" = "3:512"
@@ -331,15 +331,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:DateFolderMaker"
-        "ProductCode" = "8:{B2A8B2C3-37B4-4114-BF38-1AF0A35B2367}"
-        "PackageCode" = "8:{B2F75CAC-97ED-4BEB-B5E4-E37FA45CECA5}"
+        "ProductCode" = "8:{55630609-E88B-4720-A7E1-983094748F00}"
+        "PackageCode" = "8:{D29094ED-0E4E-47FD-8B74-149CDA6653F4}"
         "UpgradeCode" = "8:{54A2E35F-C607-46F8-8909-442A42EEE5F1}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.1.7"
+        "ProductVersion" = "8:1.1.8"
         "Manufacturer" = "8:sudongcu"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"

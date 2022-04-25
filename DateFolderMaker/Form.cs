@@ -66,33 +66,40 @@ namespace DateFolderMaker
 		/// </summary>
 		private void SetLoadFiles()
 		{
-			// clear GridView
-			dataGridViewHandler.ClearAndRefreshGrid();
-
-			InitProgressBar(FilesList.Count + 1);
-
-			// hide grid header, until progress is over for speed
-			dataGridViewHandler.HideHeader();
-
-			List<DataGridViewRow> rows = new List<DataGridViewRow>();
-
-			foreach (string file in FilesList)
+			try
 			{
-				DataGridViewRow row = new DataGridViewRow();
-				row.CreateCells(dataGridViewHandler.GetDataGridView());
-				row.Cells[(int)COL.FILE].Value = file.Substring(text_path.Text.Length + 1);
-				row.Cells[(int)COL.DATE].Value = FileUtil.GetFileDate(file);
+				// clear GridView
+				dataGridViewHandler.ClearAndRefreshGrid();
 
-				rows.Add(row);
+				InitProgressBar(FilesList.Count + 1);
 
+				// hide grid header, until progress is over for speed
+				dataGridViewHandler.HideHeader();
+
+				List<DataGridViewRow> rows = new List<DataGridViewRow>();
+
+				foreach (string file in FilesList)
+				{
+					DataGridViewRow row = new DataGridViewRow();
+					row.CreateCells(dataGridViewHandler.GetDataGridView());
+					row.Cells[(int)COL.FILE].Value = file.Substring(text_path.Text.Length + 1);
+					row.Cells[(int)COL.DATE].Value = FileUtil.GetFileDate(file);
+
+					rows.Add(row);
+
+					progressBar.PerformStep();
+				}
+
+				dataGridViewHandler.AddRowRange(rows.ToArray());
 				progressBar.PerformStep();
+
+				// show grid header
+				dataGridViewHandler.ShowHeader();
 			}
-
-			dataGridViewHandler.AddRowRange(rows.ToArray());
-			progressBar.PerformStep();
-
-			// show grid header
-			dataGridViewHandler.ShowHeader();
+			catch(Exception ex)
+			{
+				throw new Exception(ex.Message);
+			}
 		}
 
 		/// <summary>
@@ -120,32 +127,39 @@ namespace DateFolderMaker
 		/// <returns></returns>
 		private async Task FileCopy(DataGridViewModel item, string originPath, string newPath)
 		{
-			await Task.Run(() =>
+			try
 			{
+				await Task.Run(() =>
+				{
 				// get directory info
 				DirectoryInfo directoryInfo = new DirectoryInfo(DataUtil.FilePath(newPath, item.folder));
 
 				// if the directory does not exist, create new one
 				if (!directoryInfo.Exists)
-					directoryInfo.Create();
+						directoryInfo.Create();
 
-				foreach (string file in item.fileList)
-				{
-					if (new FileInfo(DataUtil.FilePath(newPath, item.folder, file)).Exists == false)
+					foreach (string file in item.fileList)
 					{
-						File.Copy(DataUtil.FilePath(originPath, file), DataUtil.FilePath(newPath, item.folder, file), false);
-						if (InvokeRequired)
+						if (new FileInfo(DataUtil.FilePath(newPath, item.folder, file)).Exists == false)
 						{
-							ShowDelegate sd = new ShowDelegate(progressBar.PerformStep);
-							Invoke(sd);
-						}
-						else
-						{
-							progressBar.PerformStep();
+							File.Copy(DataUtil.FilePath(originPath, file), DataUtil.FilePath(newPath, item.folder, file), false);
+							if (InvokeRequired)
+							{
+								ShowDelegate sd = new ShowDelegate(progressBar.PerformStep);
+								Invoke(sd);
+							}
+							else
+							{
+								progressBar.PerformStep();
+							}
 						}
 					}
-				}
-			});
+				});
+			}
+			catch(Exception ex)
+			{
+				throw new Exception(ex.Message);
+			}
 		}
 
 		#region Event
@@ -157,35 +171,42 @@ namespace DateFolderMaker
 		/// <param name="e"></param>
 		private void btn_load_Click(object sender, EventArgs e)
 		{
-			OpenFileDialog of = new OpenFileDialog
+			try
 			{
-				Title = "Load Files",
-				RestoreDirectory = true,
-				Multiselect = true
-			};
+				OpenFileDialog of = new OpenFileDialog
+				{
+					Title = "Load Files",
+					RestoreDirectory = true,
+					Multiselect = true
+				};
 
-			if (of.ShowDialog() == DialogResult.OK)
+				if (of.ShowDialog() == DialogResult.OK)
+				{
+					if (of.FileNames.Length == 0)
+						return;
+
+					Files = of.FileNames;
+					for (int i = 0; i < Files.Length; i++)
+					{
+						FilesList.Add(Files[i]);
+					}
+
+					// get first file path
+					string filePath = Path.GetDirectoryName(FilesList[0]);
+
+					if (filePath != "")
+					{
+						text_path.Text = filePath;
+						text_new.Text = filePath + "\\DateFolderMaker";
+					}
+
+					// add files to gridview
+					SetLoadFiles();
+				}
+			}
+			catch(Exception ex)
 			{
-				if (of.FileNames.Length == 0)
-					return;
-
-				Files = of.FileNames;
-				for (int i = 0; i < Files.Length; i++)
-				{
-					FilesList.Add(Files[i]);
-				}
-
-				// get first file path
-				string filePath = Path.GetDirectoryName(FilesList[0]);
-
-				if (filePath != "")
-				{
-					text_path.Text = filePath;
-					text_new.Text = filePath + "\\DateFolderMaker";
-				}
-
-				// add files to gridview
-				SetLoadFiles();
+				throw new Exception(ex.Message);
 			}
 		}
 
@@ -212,116 +233,108 @@ namespace DateFolderMaker
 		/// <param name="e"></param>
 		private void btn_create_Click(object sender, EventArgs e)
 		{
-			try
+			// result grid view list, grid view divides by create date
+			List<DataGridViewModel> list = new List<DataGridViewModel>();
+
+			#region Bind List Model
+
+			if (dataGridViewHandler.RowCount > 0)
 			{
-				// result grid view list, grid view divides by create date
-				List<DataGridViewModel> list = new List<DataGridViewModel>();
+				// create temp grid view data
+				DataGridView tempDataGridView = dataGridViewHandler.GetDataGridView();
+				// sort by date asc
+				tempDataGridView.Sort(tempDataGridView.Columns["Date"], ListSortDirection.Ascending);
 
-				#region Bind List Model
+				// model of grid view 
+				DataGridViewModel model = new DataGridViewModel();
 
-				if (dataGridViewHandler.RowCount > 0)
+				// list of file data
+				List<string> fileList = new List<string>();
+
+				for (int i = 0; i < tempDataGridView.Rows.Count; i++)
 				{
-					// create temp grid view data
-					DataGridView tempDataGridView = dataGridViewHandler.GetDataGridView();
-					// sort by date asc
-					tempDataGridView.Sort(tempDataGridView.Columns["Date"], ListSortDirection.Ascending);
+					// if file name is empty, move to next
+					if (tempDataGridView.Rows[i].Cells[0].Value is null)
+						continue;
 
-					// model of grid view 
-					DataGridViewModel model = new DataGridViewModel();
-
-					// list of file data
-					List<string> fileList = new List<string>();
-
-					for (int i = 0; i < tempDataGridView.Rows.Count; i++)
+					// if folder is empty, create folder and add list
+					if (string.IsNullOrEmpty(model.folder))
 					{
-						// if file name is empty, move to next
-						if (tempDataGridView.Rows[i].Cells[0].Value is null)
-							continue;
-
-						// if folder is empty, create folder and add list
-						if (string.IsNullOrEmpty(model.folder))
+						model.folder = DataUtil.ShortDateTimeFormat(tempDataGridView.Rows[i].Cells[(int)COL.DATE].Value.ToString());
+						fileList.Add(tempDataGridView.Rows[i].Cells[(int)COL.FILE].Value.ToString());
+					}
+					else
+					{
+						// when date is same, add item
+						if (model.folder == DataUtil.ShortDateTimeFormat(tempDataGridView.Rows[i].Cells[(int)COL.DATE].Value.ToString()))
 						{
-							model.folder = DataUtil.ShortDateTimeFormat(tempDataGridView.Rows[i].Cells[(int)COL.DATE].Value.ToString());
 							fileList.Add(tempDataGridView.Rows[i].Cells[(int)COL.FILE].Value.ToString());
 						}
 						else
 						{
-							// when date is same, add item
-							if (model.folder == DataUtil.ShortDateTimeFormat(tempDataGridView.Rows[i].Cells[(int)COL.DATE].Value.ToString()))
-							{
-								fileList.Add(tempDataGridView.Rows[i].Cells[(int)COL.FILE].Value.ToString());
-							}
-							else
-							{
-								// if date is changed, set model add list
-								model.fileList = fileList;
-								list.Add(model);
-
-								model = null;
-								fileList = null;
-								model = new DataGridViewModel();
-								fileList = new List<string>();
-
-								model.folder = DataUtil.ShortDateTimeFormat(tempDataGridView.Rows[i].Cells[(int)COL.DATE].Value.ToString());
-								fileList.Add(tempDataGridView.Rows[i].Cells[(int)COL.FILE].Value.ToString());
-							}
-						}
-
-						// add last grid view
-						// count - 1 - 1( last empty row )
-						if (i == tempDataGridView.Rows.Count - 2)
-						{
+							// if date is changed, set model add list
 							model.fileList = fileList;
 							list.Add(model);
+
+							model = null;
+							fileList = null;
+							model = new DataGridViewModel();
+							fileList = new List<string>();
+
+							model.folder = DataUtil.ShortDateTimeFormat(tempDataGridView.Rows[i].Cells[(int)COL.DATE].Value.ToString());
+							fileList.Add(tempDataGridView.Rows[i].Cells[(int)COL.FILE].Value.ToString());
 						}
 					}
-				}
 
-
-				#endregion / Bind List Model
-
-
-				#region Files Copy
-
-				string originPath = text_path.Text;
-				string newPath = text_new.Text;
-
-				if (list.Count > 0)
-				{
-					// progress bar init
-					InitProgressBar(list.Sum(s => s.fileList.Count()));
-
-					try
+					// add last grid view
+					// count - 1 - 1( last empty row )
+					if (i == tempDataGridView.Rows.Count - 2)
 					{
-						List<Task> taskList = new List<Task>();
-
-						// add task queue
-						foreach (DataGridViewModel item in list)
-						{
-							taskList.Add(FileCopy(item, originPath, newPath));
-						}
-
-						// tasking
-						Task taskAll = Task.WhenAll(taskList);
-
-						Task taskComplete = taskAll.ContinueWith(task =>
-						{
-							MessageBox.Show("Complete!", "Complete", MessageBoxButtons.OK, MessageBoxIcon.None);
-						}, TaskScheduler.FromCurrentSynchronizationContext());
-					}
-					catch (Exception ex)
-					{
-						MessageBox.Show(ex.Message, "Fail", MessageBoxButtons.OK, MessageBoxIcon.None);
+						model.fileList = fileList;
+						list.Add(model);
 					}
 				}
-
-				#endregion / Files Copy
 			}
-			catch(Exception ex)
+
+
+			#endregion / Bind List Model
+
+
+			#region Files Copy
+
+			string originPath = text_path.Text;
+			string newPath = text_new.Text;
+
+			if (list.Count > 0)
 			{
-				Trace.WriteLine($"[Error] [btn_create_Click]: {ex.Message}");
+				// progress bar init
+				InitProgressBar(list.Sum(s => s.fileList.Count()));
+
+				try
+				{
+					List<Task> taskList = new List<Task>();
+
+					// add task queue
+					foreach (DataGridViewModel item in list)
+					{
+						taskList.Add(FileCopy(item, originPath, newPath));
+					}
+
+					// tasking
+					Task taskAll = Task.WhenAll(taskList);
+
+					Task taskComplete = taskAll.ContinueWith(task =>
+					{
+						MessageBox.Show("Complete!", "Complete", MessageBoxButtons.OK, MessageBoxIcon.None);
+					}, TaskScheduler.FromCurrentSynchronizationContext());
+				}
+				catch (Exception ex)
+				{
+					throw new Exception(ex.Message);
+				}
 			}
 
+			#endregion / Files Copy
 		}
 
 		/// <summary>
