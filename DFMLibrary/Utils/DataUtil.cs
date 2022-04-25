@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 
 namespace DFMLibrary.Utils
 {
@@ -25,7 +24,14 @@ namespace DFMLibrary.Utils
 		/// <returns></returns>
 		public static string ShortDateTimeFormat(string arg)
 		{
-			return DateTime.Parse(arg).ToShortDateString();
+			try
+			{	
+				return DateTime.Parse(arg).ToShortDateString();
+			}
+			catch
+			{
+				throw new Exception($"ShortDateTimeFormat Error: {arg}");
+			}
 		}
 	}
 }
