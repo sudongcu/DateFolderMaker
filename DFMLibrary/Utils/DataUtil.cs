@@ -33,5 +33,10 @@ namespace DFMLibrary.Utils
 				throw new Exception(ex.Message);
 			}
 		}
+
+		public static string TotalTextFormat(int count)
+		{
+			return $"{count} Files";
+		}
 	}
 }

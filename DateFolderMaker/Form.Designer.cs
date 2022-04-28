@@ -40,6 +40,7 @@
 			this.dataGridView = new System.Windows.Forms.DataGridView();
 			this.btn_clear = new System.Windows.Forms.Button();
 			this.progressBar = new System.Windows.Forms.ProgressBar();
+			this.total_label = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -135,10 +136,11 @@
 			this.dataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
 			this.dataGridView.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(233)))), ((int)(((byte)(233)))));
 			this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dataGridView.Location = new System.Drawing.Point(14, 64);
+			this.dataGridView.Location = new System.Drawing.Point(14, 79);
 			this.dataGridView.Name = "dataGridView";
+			this.dataGridView.ReadOnly = true;
 			this.dataGridView.RowTemplate.Height = 23;
-			this.dataGridView.Size = new System.Drawing.Size(711, 453);
+			this.dataGridView.Size = new System.Drawing.Size(711, 438);
 			this.dataGridView.TabIndex = 7;
 			// 
 			// btn_clear
@@ -164,12 +166,23 @@
 			this.progressBar.Size = new System.Drawing.Size(711, 23);
 			this.progressBar.TabIndex = 9;
 			// 
+			// total_label
+			// 
+			this.total_label.AutoSize = true;
+			this.total_label.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+			this.total_label.Location = new System.Drawing.Point(12, 64);
+			this.total_label.Name = "total_label";
+			this.total_label.Size = new System.Drawing.Size(49, 12);
+			this.total_label.TabIndex = 10;
+			this.total_label.Text = "0 Files";
+			// 
 			// DateFolderMaker
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(233)))), ((int)(((byte)(233)))), ((int)(((byte)(233)))));
 			this.ClientSize = new System.Drawing.Size(839, 554);
+			this.Controls.Add(this.total_label);
 			this.Controls.Add(this.progressBar);
 			this.Controls.Add(this.btn_clear);
 			this.Controls.Add(this.dataGridView);
@@ -202,6 +215,7 @@
 		private System.Windows.Forms.DataGridView dataGridView;
 		private System.Windows.Forms.Button btn_clear;
 		private System.Windows.Forms.ProgressBar progressBar;
+		private System.Windows.Forms.Label total_label;
 	}
 }
 

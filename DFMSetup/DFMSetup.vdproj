@@ -166,7 +166,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:DFMLibrary, Version=1.1.7.1, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:DFMLibrary, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_0292B55641B27735898507E91EBA3614"
@@ -331,15 +331,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:DateFolderMaker"
-        "ProductCode" = "8:{55630609-E88B-4720-A7E1-983094748F00}"
-        "PackageCode" = "8:{D29094ED-0E4E-47FD-8B74-149CDA6653F4}"
+        "ProductCode" = "8:{8626C215-310B-4A09-A9EC-34FCCFB05C59}"
+        "PackageCode" = "8:{12FEF823-7238-4FD0-94C2-BC17734D98A0}"
         "UpgradeCode" = "8:{54A2E35F-C607-46F8-8909-442A42EEE5F1}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
-        "ProductVersion" = "8:1.1.8"
+        "ProductVersion" = "8:1.2.0"
         "Manufacturer" = "8:sudongcu"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"

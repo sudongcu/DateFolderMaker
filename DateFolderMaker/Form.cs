@@ -34,6 +34,8 @@ namespace DateFolderMaker
 			text_path.Text = "";
 			text_new.Text = "";
 
+			total_label.Text = DataUtil.TotalTextFormat(0);
+
 			InitGrid();
 		}
 
@@ -95,6 +97,8 @@ namespace DateFolderMaker
 
 				// show grid header
 				dataGridViewHandler.ShowHeader();
+
+				total_label.Text = DataUtil.TotalTextFormat(dataGridViewHandler.RowCount);
 			}
 			catch(Exception ex)
 			{
@@ -111,6 +115,8 @@ namespace DateFolderMaker
 
 			text_path.Text = "";
 			text_new.Text = "";
+
+			total_label.Text = DataUtil.TotalTextFormat(0);
 
 			Files = null;
 			FilesList.Clear();
