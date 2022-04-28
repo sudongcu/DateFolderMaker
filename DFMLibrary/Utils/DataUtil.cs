@@ -34,6 +34,11 @@ namespace DFMLibrary.Utils
 			}
 		}
 
+		/// <summary>
+		/// get string format of total file's count 
+		/// </summary>
+		/// <param name="count"></param>
+		/// <returns></returns>
 		public static string TotalTextFormat(int count)
 		{
 			return $"{count} Files";
