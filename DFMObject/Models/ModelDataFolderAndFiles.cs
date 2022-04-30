@@ -2,7 +2,7 @@
 
 namespace DFMObject.Models
 {
-	public class DataGridViewModel
+	public class ModelDataFolderAndFiles
 	{
 		/// <summary>
 		/// folder name ( yyyy-MM-dd )

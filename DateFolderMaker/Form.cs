@@ -131,7 +131,7 @@ namespace DateFolderMaker
 		/// <param name="originPath"></param>
 		/// <param name="newPath"></param>
 		/// <returns></returns>
-		private async Task FileCopy(DataGridViewModel item, string originPath, string newPath)
+		private async Task FileCopy(ModelDataFolderAndFiles item, string originPath, string newPath)
 		{
 			try
 			{
@@ -240,7 +240,7 @@ namespace DateFolderMaker
 		private void btn_create_Click(object sender, EventArgs e)
 		{
 			// result grid view list, grid view divides by create date
-			List<DataGridViewModel> list = new List<DataGridViewModel>();
+			List<ModelDataFolderAndFiles> list = new List<ModelDataFolderAndFiles>();
 
 			#region Bind List Model
 
@@ -252,7 +252,7 @@ namespace DateFolderMaker
 				tempDataGridView.Sort(tempDataGridView.Columns["Date"], ListSortDirection.Ascending);
 
 				// model of grid view 
-				DataGridViewModel model = new DataGridViewModel();
+				ModelDataFolderAndFiles model = new ModelDataFolderAndFiles();
 
 				// list of file data
 				List<string> fileList = new List<string>();
@@ -284,7 +284,7 @@ namespace DateFolderMaker
 
 							model = null;
 							fileList = null;
-							model = new DataGridViewModel();
+							model = new ModelDataFolderAndFiles();
 							fileList = new List<string>();
 
 							model.folder = DataUtil.ShortDateTimeFormat(tempDataGridView.Rows[i].Cells[(int)COL.DATE].Value.ToString());
@@ -321,7 +321,7 @@ namespace DateFolderMaker
 					List<Task> taskList = new List<Task>();
 
 					// add task queue
-					foreach (DataGridViewModel item in list)
+					foreach (ModelDataFolderAndFiles item in list)
 					{
 						taskList.Add(FileCopy(item, originPath, newPath));
 					}

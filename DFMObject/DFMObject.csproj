@@ -41,10 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enums\ControllerEnum.cs" />
-    <Compile Include="Enums\ImageEnum.cs" />
-    <Compile Include="Models\DataGridViewModel.cs" />
-    <Compile Include="Models\GridViewDataModel.cs" />
+    <Compile Include="Enums\EnumController.cs" />
+    <Compile Include="Enums\EnumImage.cs" />
+    <Compile Include="Models\ModelDataFolderAndFiles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
