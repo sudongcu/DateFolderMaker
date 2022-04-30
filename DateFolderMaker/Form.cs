@@ -15,8 +15,6 @@ namespace DateFolderMaker
 {
 	public partial class DateFolderMaker : Form
 	{
-		// loaded files
-		private string[] Files;
 		// after load file, move into setFileList
 		private List<string> FilesList = new List<string>();
 
@@ -47,7 +45,7 @@ namespace DateFolderMaker
 			dataGridViewHandler = new DataGridViewHandler(dataGridView);
 			dataGridViewHandler.AddHeader("File", "File", (int)COL.FILE, 400, DataGridViewContentAlignment.MiddleLeft);
 			dataGridViewHandler.AddHeader("Date", "Date", (int)COL.DATE, 200, DataGridViewContentAlignment.MiddleLeft);
-			dataGridViewHandler.ClearAndRefreshGrid();
+			dataGridViewHandler.ClearAndRefresh();
 		}
 
 		/// <summary>
@@ -71,8 +69,9 @@ namespace DateFolderMaker
 			try
 			{
 				// clear GridView
-				dataGridViewHandler.ClearAndRefreshGrid();
+				dataGridViewHandler.ClearAndRefresh();
 
+				// init progress bar
 				InitProgressBar(FilesList.Count + 1);
 
 				// hide grid header, until progress is over for speed
@@ -98,6 +97,7 @@ namespace DateFolderMaker
 				// show grid header
 				dataGridViewHandler.ShowHeader();
 
+				// set total label text
 				total_label.Text = DataUtil.TotalTextFormat(dataGridViewHandler.RowCount);
 			}
 			catch(Exception ex)
@@ -111,16 +111,18 @@ namespace DateFolderMaker
 		/// </summary>
 		private void Clear()
 		{
-			dataGridViewHandler.ClearAndRefreshGrid();
+			// grid clear
+			dataGridViewHandler.ClearAndRefresh();
 
+			// label clear
 			text_path.Text = "";
 			text_new.Text = "";
-
 			total_label.Text = DataUtil.TotalTextFormat(0);
 
-			Files = null;
+			// list clear
 			FilesList.Clear();
 
+			// progress bar clear
 			InitProgressBar(0);
 		}
 
@@ -137,11 +139,11 @@ namespace DateFolderMaker
 			{
 				await Task.Run(() =>
 				{
-				// get directory info
-				DirectoryInfo directoryInfo = new DirectoryInfo(DataUtil.FilePath(newPath, item.folder));
+					// get directory info
+					DirectoryInfo directoryInfo = new DirectoryInfo(DataUtil.FilePath(newPath, item.folder));
 
-				// if the directory does not exist, create new one
-				if (!directoryInfo.Exists)
+					// if the directory does not exist, create new one
+					if (!directoryInfo.Exists)
 						directoryInfo.Create();
 
 					foreach (string file in item.fileList)
@@ -191,11 +193,11 @@ namespace DateFolderMaker
 					if (of.FileNames.Length == 0)
 						return;
 
-					Files = of.FileNames;
-					for (int i = 0; i < Files.Length; i++)
-					{
-						FilesList.Add(Files[i]);
-					}
+					// clear file list to prevent duplicate load issue
+					FilesList.Clear();
+
+					// add files to list
+					FilesList.AddRange(of.FileNames);
 
 					// get first file path
 					string filePath = Path.GetDirectoryName(FilesList[0]);

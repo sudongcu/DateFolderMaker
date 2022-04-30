@@ -18,36 +18,30 @@ namespace DFMLibrary.Utils
 		/// <returns></returns>
 		public static string GetFileDate(string imgFile)
 		{
-			string format = "yyyy-MM-dd HH:mm:ss";	// datetime format
 			try
 			{
-				// 이미지 유효성 검사
-				if (ValidationUtil.IsValidImage(imgFile))
+				using (FileStream fs = File.OpenRead(imgFile))
 				{
-					Image image = new Bitmap(imgFile);
-					PropertyItem[] propItems = image.PropertyItems;
-					image.Dispose();
+					using (Image image = Image.FromStream(fs, false, true))
+					{
+						PropertyItem[] propItems = image.PropertyItems;
 
-					ASCIIEncoding encoding = new ASCIIEncoding();
+						ASCIIEncoding encoding = new ASCIIEncoding();
 
-					string[] values = encoding.GetString(propItems.Where(s => s.Id == (int)IMAGE_META_DATA.CREATE_DATE_TIME).Select(s => s.Value).FirstOrDefault()).Replace("?", "").Split(' ');
+						string[] values = encoding.GetString(propItems.Where(s => s.Id == (int)IMAGE_META_DATA.CREATE_DATE_TIME).Select(s => s.Value).FirstOrDefault()).Replace("?", "").Split(' ');
 
-					values[1] = values[1].Length > 8 ? values[1].Substring(0, 8) : values[1];
-					// replace 24:00:00 to 00:00:00
-					values[1] = Regex.Replace(values[1], @"24:(\d\d:\d\d)$", "00:$1");
+						values[1] = values[1].Length > 8 ? values[1].Substring(0, 8) : values[1];
+						// replace 24:00:00 to 00:00:00
+						values[1] = Regex.Replace(values[1], @"24:(\d\d:\d\d)$", "00:$1");
 
-					return values[0].Replace(":", "-") + " " + values[1];
-				}
-				else
-				{
-					FileInfo fileInfo = new FileInfo(imgFile);
-					return fileInfo.LastWriteTime.ToString(format);
+						return values[0].Replace(":", "-") + " " + values[1];
+					}
 				}
 			}
 			catch
 			{
 				FileInfo fileInfo = new FileInfo(imgFile);
-				return fileInfo.LastWriteTime.ToString(format);
+				return fileInfo.LastWriteTime.ToString("yyyy-MM-dd HH:mm:ss");
 			}
 		}
 

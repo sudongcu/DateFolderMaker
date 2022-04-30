@@ -21,7 +21,7 @@ namespace DFMLibrary.Module
 		}
 
 		/// <summary>
-		/// Return DateGridView
+		/// return datagridview
 		/// </summary>
 		/// <returns></returns>
 		public DataGridView GetDataGridView()
@@ -30,7 +30,7 @@ namespace DFMLibrary.Module
 		}
 
 		/// <summary>
-		/// DataGridView Column Add
+		/// add column header
 		/// </summary>
 		/// <param name="headertext">Column Header Text</param>
 		/// <param name="name">Column Name</param>
@@ -67,7 +67,7 @@ namespace DFMLibrary.Module
 		}
 
 		/// <summary>
-		/// Show DateGridView Header
+		/// show header
 		/// </summary>
 		public void ShowHeader()
 		{
@@ -75,7 +75,7 @@ namespace DFMLibrary.Module
 		}
 
 		/// <summary>
-		/// Hide DateGridView Header
+		/// hide header
 		/// </summary>
 		public void HideHeader()
 		{
@@ -83,7 +83,7 @@ namespace DFMLibrary.Module
 		}
 
 		/// <summary>
-		/// Add Row Values
+		/// add Row
 		/// </summary>
 		/// <param name="values"></param>
 		public void AddRow(params object[] values)
@@ -105,6 +105,10 @@ namespace DFMLibrary.Module
 			}
 		}
 
+		/// <summary>
+		/// add rows
+		/// </summary>
+		/// <param name="rows"></param>
 		public void AddRowRange(DataGridViewRow[] rows)
 		{
 			int count = 0;
@@ -125,7 +129,7 @@ namespace DFMLibrary.Module
 		}
 
 		/// <summary>
-		/// Remove Row
+		/// remove Row
 		/// </summary>
 		/// <param name="values"></param>
 		public void RemoveRow(int row)
@@ -148,9 +152,9 @@ namespace DFMLibrary.Module
 		}
 
 		/// <summary>
-		/// DataGridView Clear And Refresh
+		/// clear And refresh datagridview
 		/// </summary>
-		public void ClearAndRefreshGrid()
+		public void ClearAndRefresh()
 		{
 			dgv.Rows.Clear();
 			dgv.Refresh();
