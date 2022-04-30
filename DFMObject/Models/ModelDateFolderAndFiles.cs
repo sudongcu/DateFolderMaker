@@ -2,7 +2,7 @@
 
 namespace DFMObject.Models
 {
-	public class ModelDataFolderAndFiles
+	public class ModelDateFolderAndFiles
 	{
 		/// <summary>
 		/// folder name ( yyyy-MM-dd )
